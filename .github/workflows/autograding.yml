@@ -1,0 +1,44 @@
+name: Autograding
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the student's code (on the main branch)
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      # Checkout the instructor's test files from the test branch
+      - name: Checkout tests from test branch
+        uses: actions/checkout@v2
+        with:
+          ref: test
+          path: tests
+
+      # Set up Python
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Run the tests
+      - name: Run tests
+        run: |
+          pytest tests/ --junitxml=results.xml

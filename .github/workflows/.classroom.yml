@@ -1,0 +1,10 @@
+autograding:
+  tests:
+    - name: Test main functionality
+      setup: |
+        # Optional setup commands
+      run: |
+        pytest tests/test_script.py
+      input: ""
+      output: "Expected output"
+      points: 10
